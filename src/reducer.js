@@ -1,5 +1,6 @@
 export const initialState = {
   basket: [],
+  user: null,
 };
 
 const reducer = (state, action) => {
@@ -13,8 +14,18 @@ const reducer = (state, action) => {
 
     case "REMOVE_FROM_BASKET":
       //logic for remove from basket
+      let newBasket = [...state.basket];
+      const index = state.basket.findIndex(
+        (basketitem) => basketitem.id === action.id
+      );
+      if (index >= 0) {
+        newBasket.splice(index, 1);
+      } else {
+        console.warn("Item not removed");
+      }
       return {
-        state,
+        ...state,
+        basket: newBasket,
       };
 
     default:
